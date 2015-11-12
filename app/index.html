@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html ng-app="pizzaApp">
+  <head>
+   <!--  <base href="/"/> -->
+   <title>Pizza App</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <h1>Pizza Test</h1>
+      <div class="navbar">
+        <ul class="nav">
+          <li><a href="#/order">create order</a></li>
+          <li><a href="#/orders">exiting orders</a></li>
+        </ul>
+      </div>
+      <div ng-view></div>
+  </div>
+  <script src="lib/angular/angular.js"></script>
+  <script src="lib/angular/angular-route.js"></script>
+  <script src="lib/angular/angular-resource.js"></script>
+  <script src="/js/jquery-2.1.4.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/controllers/OrderController.js"></script> 
+  <script src="/js/controllers/OrderListController.js"></script> 
+  <script src="/js/controllers/EditOrderController.js"></script> 
+  <script src="/js/services/VendorData.js"></script>
+  <script src="/js/services/OrderData.js"></script>
+  <!-- <script src="js/services/locations.js"></script>-->
+  </body>
+
+</html>

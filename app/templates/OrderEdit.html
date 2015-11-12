@@ -1,0 +1,90 @@
+<h2>Edit an Order</h2>
+
+<button ng-model="collapsed" ng-click="collapsed=!collapsed">
+  <span ng-show="!collapsed">Show Debug</span>
+  <span ng-show="collapsed">Hide Debug</span>
+</button>
+
+<div ng-show="collapsed" class="row">
+  <div class="col-sm-3">
+    Customer Number: {{customer.id}} : {{customer.fname}} {{customer.lname}}
+    <pre>
+      {{order}} 
+    </pre>
+  </div>
+  <div class="col-sm-3">
+    All orders: {{order.items}} 
+  </div>
+  <div class="col-sm-3">
+    Order Length: {{order.items.length}}
+  </div>
+  <div class="col-sm-3">
+    deleteItem: {{disableDeleteItemButton}}
+  </div>
+</div>
+<hr>
+<form name="newOrderForm" class="">
+  <div class="row">
+    <span class="col-sm-12 col-lg-4" ng-class="{'has-error': newOrderForm.vendor.$error.required}">
+      <label for="Vendor">Vendor:</label>
+      <select name="vendor" ng-model="order.vendor" class="form-control" ng-class="{'has-error': newOrderForm.vendor.$error.required}" required>
+        <option>Dominos</option>
+        <option>Pizza Hut</option>
+        <option>Panago</option>
+        <option>Papa's</option>
+      </select>
+    </span>
+  </div>
+  <div ng-repeat="item in order.items" class="row" ng-model="order.items">
+    <ng-form name="itemForm_{{$index}}">  
+      <span class="col-sm-2" ng-class="{'has-error': itemForm_{{$index}}.count.$error.required}">
+        <!-- <label for="count">Count</label> -->
+        <select name="count" ng-model="order.items[$index].count" class="form-control" required>
+          <option disabled="disabled" selected value="">&#35;</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+        </select>
+      </span>
+      <span class="col-sm-4" ng-class="{'has-error': itemForm_{{$index}}.type.$error.required}">
+        <!-- <label for="type">Type</label> -->
+        <select name="type" ng-model="order.items[$index].type" class="form-control" required>
+          <option disabled="disabled" selected value="">Type</option>
+          <option>peporoni</option>
+          <option>hawaiian</option>
+          <option>veggie</option>
+          <option>cheese</option>
+        </select>
+      </span>
+      <span class="col-sm-4" ng-class="{'has-error': itemForm_{{$index}}.size.$error.required}">
+        <!-- <label for="size">Size</label> -->
+        <select name="size" ng-model="order.items[$index].size" class="form-control" required>
+          <option disabled="disabled" selected value="">Size</option>
+          <option>large</option>
+          <option>medium</option>
+          <option>small</option>
+        </select>
+      </span>
+      <span class="col-sm-2">
+        <button class="removeItemButton btn" x-ng-disabled="order.items.length < 2" ng-disabled="disableDeleteItemButton" ng-click="removeItem(item)" ng-show="!$first">
+          <i class="glyphicon-minus"></i>
+        </button>
+      </span>
+    </ng-form><!-- ng-form -->
+  </div><!-- ng-repeat -->
+  <div class="row">
+    <span class="col-sm-2 col-sm-push-10">
+     <button class="addItemButton btn" ng-click="addItem(item)">
+        <i class="glyphicon-plus"></i>
+      </button>
+    </span>
+    <span class="col-sm-4 col-sm-pull-2">
+     <!--  <button type="submit" ng-disabled="newOrderForm.$invalid" ng-click="updateOrder(order, newOrderForm)" class="btn btn-primary">Save</button> -->
+      <a ng-href="/#/orders" class="glyphicon glyphicon-chevron-left btn btn-default">Back to Order Listing</a>
+    </span> 
+    <span class="col-sm-4 col-sm-pull-2">
+      <span ng-show="savedMessage" class="text-success glyphicon glyphicon-floppy-saved">Change saved!</span>
+    </span>
+  </div>
+</form>
