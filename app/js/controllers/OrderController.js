@@ -8,6 +8,7 @@ pizzaApp.controller('OrderController',
       items: [
         {
           id: 1,
+          count: 0,
           type: '',
           size: ''
         }
@@ -20,6 +21,7 @@ pizzaApp.controller('OrderController',
       items: [
         {
           id: 1,
+          count: 0,
           type: '',
           size: ''
         }
