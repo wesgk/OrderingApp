@@ -29,10 +29,10 @@ $scope.order = {
 };
 ```
 ## Motivation
-I wanted to develop an app where users can order from multiple vendors in one simple place.  
+I wanted to develop a simple Angular application I can use as a starting point for future developments.  
 
 ## Installation
-Requires Node express v4.2.1.  I did not commit the node_modules directory.  That is all that is missing.  (More installation notes to come.)
+Requires Node express v4.2.1.  I did not commit the node_modules directory.  You can download that here: https://nodejs.org/download/release/v4.2.1/
 
 ## Tests
 No testing scripts setup yet
@@ -41,5 +41,5 @@ No testing scripts setup yet
 @wesgknight
 
 ## License
-
+see LICENSE.md
 
