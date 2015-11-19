@@ -1,31 +1,51 @@
 # OrderingApp
 
-## 2015/11/11
+## 2015/11/18
 ## Synopsis
 
 This is a very simple application written in Angular 1.4.0 & Node Express express v4.2.1.  It is a inventory-listing/product-ordering app. All product orders are stored as .json files inside /app/data/order/.
 
-Currently the functionality is very limited.  Orders can be created and edited.  The 'list all orders' view displays a list of all existing orders.  Once the save button has been pressed on a new order additional order edits are automatically saved, as the order content is edited.
+Currently the functionality is very limited.  Orders &amp; Users can be created and edited.   
 
-> Customer profiles have yet to be implemented
 > Vendor options are hard-coded into the mark-up
-> items.type options are hard-coded into the mark-up
-> items.size options are hard-coded into the mark-up
+> All dropdown options in orders and user forms are hard-coded
 
 ## Code Sample
 This is the existing order object:
 ```
 $scope.order = {
   vendor: '',
-  customerId: 0,
-  items: [
+    customerId: 0,
+    items: [
     {
       id: 1,
-      count: 0,
+      count: '',
       type: '',
       size: ''
     }
-  ]
+    ]
+};
+
+$scope.user = { 
+  fname: '',
+  lname: '',
+  email: '',
+  telephone: '',
+  paypalNumber: 0,
+  addresses: [
+  {
+    id: '0',
+    buildingNumber: '',
+    apartmentNumber: '',
+    streetName: '',
+    city: '',
+    country: '',
+    province: '',
+    postalCode: '',
+    specialInstructions: ''
+  }
+  ],
+  defaultAddress: ''
 };
 ```
 ## Motivation
