@@ -15,17 +15,6 @@ pizzaApp.controller('EditOrderController',
         .then(function(response) { $log.debug('success', response); flashSavedMessage(); })
         .catch(function(response) { $log.error('failure', response)});
     };
-    var debounceUpdate = function(newVal, oldVal, scope) {
-      if (newVal != oldVal) {
-        if(scope.order.id){
-          updateOrder(scope.order, newOrderForm);
-        }
-      }
-    };
-    var watchTO = $timeout(function(){
-      $scope.$watch('order.vendor', debounceUpdate);
-      $scope.$watch('order.items', debounceUpdate, true);
-    }, 1000);
     function flashSavedMessage(){
       $scope.savedMessage = true;
       savedMessageTO = $timeout(function(){
