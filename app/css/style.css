@@ -7,3 +7,20 @@ textarea {
 select {
   width: 100%;
 }
+fieldset {
+  margin: 2px 0;
+  padding: 16px;
+  border-top: 1px solid #747474;
+}
+.form-control-strip {
+  padding: 0.5em;
+}
+.default-address-radio-btn span {
+  /*width: auto;*/
+  display: block;
+  margin: 4px;
+}
+/*.bg-primary{
+  padding: 10px;
+  border-radius: 6px;
+}*/

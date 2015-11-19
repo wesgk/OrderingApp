@@ -67,7 +67,7 @@
         </select>
       </span>
       <span class="col-sm-2">
-        <button class="removeItemButton btn" x-ng-disabled="order.items.length < 2" ng-disabled="disableDeleteItemButton" ng-click="removeItem(item)" ng-show="!$first">
+        <button class="removeItemButton btn" x-ng-disabled="order.items.length < 2" ng-disabled="disableDeleteItemButton" ng-click="removeItem(order.items, item, index)" ng-show="!$first">
           <i class="glyphicon-minus"></i>
         </button>
       </span>
@@ -75,7 +75,7 @@
   </div><!-- ng-repeat -->
   <div class="row">
     <span class="col-sm-2 col-sm-push-10">
-     <button class="addItemButton btn" ng-click="addItem(item)">
+     <button class="addItemButton btn" ng-click="addItem(order.items)">
         <i class="glyphicon-plus"></i>
       </button>
     </span>

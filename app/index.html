@@ -15,6 +15,15 @@
         <ul class="nav">
           <li><a href="#/order">create order</a></li>
           <li><a href="#/orders">exiting orders</a></li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" href="#/users">
+              users
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+              <li><a href="#/user">create user profile</a></li>
+            </ul>
+          </li>
         </ul>
       </div>
       <div ng-view></div>
@@ -26,10 +35,15 @@
   <script src="/js/bootstrap.min.js"></script>
   <script src="/js/app.js"></script>
   <script src="/js/controllers/OrderController.js"></script> 
-  <script src="/js/controllers/OrderListController.js"></script> 
   <script src="/js/controllers/EditOrderController.js"></script> 
+  <script src="/js/controllers/OrderListController.js"></script> 
+  <script src="/js/controllers/UserController.js"></script> 
+  <script src="/js/controllers/EditUserController.js"></script> 
+  <script src="/js/controllers/UserListController.js"></script> 
+
   <script src="/js/services/VendorData.js"></script>
   <script src="/js/services/OrderData.js"></script>
+  <script src="/js/services/UserData.js"></script>
   <!-- <script src="js/services/locations.js"></script>-->
   </body>
 

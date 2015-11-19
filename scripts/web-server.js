@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var vendors = require('./vendorsController');
 var orders = require('./ordersController');
+var users = require('./usersController');
 var app = express();
 var rootPath = path.normalize(__dirname + '/../');
 var bodyParser = require('body-parser');
@@ -18,6 +19,10 @@ app.get('/data/order/new', orders.getNextId);
 app.get('/data/order/:id', orders.get);
 app.post('/data/order/:id', orders.save);
 app.get('/data/order', orders.getAll);
+app.get('/data/user/new', users.getNextId);
+app.get('/data/user/:id', users.get);
+app.post('/data/user/:id', users.save);
+app.get('/data/user', users.getAll);
 
 app.get('*', function(req, res){ res.sendFile(rootPath + '/app/index.html'); });
 
