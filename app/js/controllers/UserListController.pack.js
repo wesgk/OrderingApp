@@ -1,1 +1,0 @@
-"use strict";pizzaApp.controller("UserListController",function(t,n,r){t.users;var i=n.getAllUsers().$promise.then(function(e){r.debug("success",e);t.users=e}).catch(function(e){r.error("failure",e)})});

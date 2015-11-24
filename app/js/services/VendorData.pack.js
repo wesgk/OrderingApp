@@ -1,1 +1,0 @@
-"use strict";pizzaApp.factory("vendorData",function(){var e=$resource("/data/vendor/:id",{id:"@id"},{getAll:{method:"GET",isArray:!0,params:{something:"foo"}}});return{getVendor:function(t){return e.get({id:t})},getAllVendors:function(){return e.query()}}});

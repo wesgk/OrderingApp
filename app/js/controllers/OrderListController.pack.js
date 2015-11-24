@@ -1,1 +1,0 @@
-"use strict";pizzaApp.controller("OrderListController",function(t,n,r){var i=n.getAllOrders().$promise.then(function(e){r.debug("success",e);t.orders=e}).catch(function(e){r.error("failure",e)})});
