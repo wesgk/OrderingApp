@@ -73,6 +73,10 @@ pizzaApp.factory('orderData', function($resource, $http, $log){
       });
   }
 
+  var processOrder = function(){
+    
+  }
+
   return {
       order: order,
       getOrder: getOrder,

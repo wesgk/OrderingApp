@@ -25,17 +25,18 @@
 <hr>
 <form name="newOrderForm" class="">
   <div class="row">
-    <span class="col-sm-12 col-lg-4" ng-class="{'has-error': newOrderForm.vendor.$error.required}">
-      <label for="Vendor">Vendor:</label>
-      <select name="vendor" ng-model="order.vendor" class="form-control" ng-class="{'has-error': newOrderForm.vendor.$error.required}" required>
-        <option>Dominos</option>
-        <option>Pizza Hut</option>
-        <option>Panago</option>
-        <option>Papa's</option>
-      </select>
-    </span>
+    <google-places-map info="user.addresses[$index]" addressIndex="$index"></google-places-map>
   </div>
-  
+  <fieldset ng-disabled="reviewFields">
+  <div class="row">
+    <select ng-model="order.vendor" class="col-sm-12 col-lg-4" ng-class="{'has-error': newOrderForm.vendor.$error.required}" required>
+      <option disabled="disabled" selected value="">Choose a Pizzeria, Pal!</option>
+      <option ng-repeat="store in vendorList" value="{{store.id}}">{{store.value}}</option>
+    </select>
+  </div>
+ <!--  <div class="row">
+    <google-places-dropdown ng-model="order" optionExp="store in vendorList" value="store.id" display="store.value" required="true"></google-places-dropdown>
+  </div> -->
   <div ng-repeat="item in order.items" class="row" ng-model="order.items">
     <ng-form name="itemForm_{{$index}}">  
       <span class="col-sm-2" ng-class="{'has-error': itemForm_{{$index}}.count.$error.required}">
@@ -74,6 +75,7 @@
       </span>
     </ng-form><!-- ng-form -->
   </div><!-- ng-repeat -->
+  </fieldset>
   <div class="row">
     <span class="col-sm-2 col-sm-push-10">
      <button class="addItemButton btn" ng-click="addItem(order.items)">
@@ -81,9 +83,12 @@
       </button>
     </span>
     <span class="col-sm-4 col-sm-pull-2">
-      <button type="submit" ng-show="!order.id" ng-disabled="newOrderForm.$invalid" ng-click="saveOrder(order, newOrderForm)" class="btn btn-primary">Save Order</button>
-      <button type="submit" ng-show="order.id" ng-disabled="newOrderForm.$invalid" ng-click="updateOrder(order, newOrderForm)" class="btn btn-primary">Update Order</button>
-      <button type="button" ng-click="reset()" class="btn btn-default">Reset</button>
+      <button type="button" ng-click="reset()" ng-show="!reviewFields" ng-disabled="!newOrderForm.$dirty" class="btn btn-default">Reset</button>
+      <button type="submit" ng-show="!reviewFields" ng-disabled="newOrderForm.$invalid || reviewFields" ng-click="reviewOrder(order, newOrderForm)" class="btn btn-primary">Review my Order</button>
+      <button type="submit" ng-show="reviewFields && !order.id" ng-disabled="newOrderForm.$invalid || !reviewFields" ng-click="editOrder(order, newOrderForm)" class="btn btn-primary">Edit Order</button>
+      <button type="submit" ng-show="reviewFields && !order.id" ng-disabled="newOrderForm.$invalid || !reviewFields" ng-click="saveOrder(order, newOrderForm)" class="btn btn-primary">Place my Order</button>
+        <span ng-show="order.id" class="text-success glyphicon glyphicon-floppy-saved">Your order has been placed!
+    </span>
     </span> 
     <span class="col-sm-4 col-sm-pull-2">
       <span ng-show="savedMessage" class="text-success glyphicon glyphicon-floppy-saved">Change saved!

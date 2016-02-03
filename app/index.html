@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="pizzaApp">
   <head>
-   <!--  <base href="/"/> -->
+   <base href="/"/>
    <title>Pizza App</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css" />
@@ -13,26 +13,40 @@
       <h1>Pizza Test</h1>
       <div class="navbar">
         <ul class="nav">
-          <li><a href="#/order">create order</a></li>
-          <li><a href="#/orders">exiting orders</a></li>
+          <li><a href="/order">create order</a></li>
+          <li><a href="/orders">exiting orders</a></li>
           <li class="dropdown">
-            <a class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" href="#/users">
+            <a class="dropdown-toggle" id="menu1" data-toggle="dropdown" href="/users">
               users
               <span class="caret"></span>
             </a>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-              <li><a href="#/user">create user profile</a></li>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+              <li><a href="/user">create user profile</a></li>
             </ul>
           </li>
+         <!-- <li class="dropdown">
+            <a class="dropdown-toggle" id="menu2" data-toggle="dropdown" href="/vendor/stores/dominos">
+              stores
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="menu2">
+              <li><a href="/vendor/stores/dominos">Stores</a></li>
+            </ul>
+          </li> -->
         </ul>
       </div>
       <div ng-view></div>
-  </div>
-  <script src="lib/angular/angular.js"></script>
-  <script src="lib/angular/angular-route.js"></script>
-  <script src="lib/angular/angular-resource.js"></script>
-  <script src="/js/jquery-2.1.4.min.js"></script>
-  <script src="/js/bootstrap.min.js"></script>
+    </div>
+  
+  <script src="/lib/angular/angular.js"></script>
+  <script src="/lib/angular/angular-route.js"></script>
+  <script src="/lib/angular/angular-resource.js"></script>
+  <!-- <script src="/lib/jquery.min.js"></script> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="/lib/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+  <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_MqNXVF36cZgRywDiji4n7AZli25uFQs">
+  </script><!-- &callback=initMap was appended and causing console error -->
   <script src="/js/app.js"></script>
   <script src="/js/controllers/OrderController.js"></script> 
   <script src="/js/controllers/EditOrderController.js"></script> 
@@ -40,11 +54,20 @@
   <script src="/js/controllers/UserController.js"></script> 
   <script src="/js/controllers/EditUserController.js"></script> 
   <script src="/js/controllers/UserListController.js"></script> 
-
+  <script src="/js/controllers/StoreListController.js"></script> 
+  <script src="/js/controllers/EditStoreController.js"></script> 
   <script src="/js/services/VendorData.js"></script>
   <script src="/js/services/OrderData.js"></script>
   <script src="/js/services/UserData.js"></script>
-  <!-- <script src="js/services/locations.js"></script>-->
+  <script src="/js/services/resources/Provinces.js"></script>
+  <script src="/js/services/StoreData.js"></script>
+  <script src="/js/services/GooglePlaces.js"></script>
+  <script src="/js/services/GoogleGeoLocation.js"></script>
+  <script src="/js/services/TwilioSms.js"></script>
+  <script src="/js/directives/GoogleMapDraggable.js"></script>
+  <script src="/js/directives/GooglePlacesMap.js"></script>
+  <script src="/js/directives/GooglePlacesDropdown.js"></script>
+  <script src="/js/filters/StoreFilters.js"></script> 
+  <img src="/images/map_icon_' + markerImage + '.png"
   </body>
-
 </html>

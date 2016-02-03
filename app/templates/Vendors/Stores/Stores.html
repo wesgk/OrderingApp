@@ -1,0 +1,37 @@
+<h2>Stores</h2>
+
+<button ng-model="collapsed" ng-click="collapsed=!collapsed">
+  <span ng-show="!collapsed">Show Debug</span>
+  <span ng-show="collapsed">Hide Debug</span>
+</button>
+<div class="row bg-primary" ng-show="collapsed">
+  <pre>
+    {{stores | json}}
+  </pre>
+</div>
+
+<hr>
+<table class="table table-striped">
+  <tr>
+    <th>&nbsp;</th>
+    <th>Address</th>
+    <th>Hours</th>
+    <th>Carryout Hours</th>
+    <th>Delivery Hours</th>
+    <th>Online Capable</th>
+    <th>Online Now</th>
+    <th>Allow Delivery</th>
+    <th>Delivery is Open</th>
+  </tr>
+  <tr ng-repeat="store in stores">
+    <td><a href="#/vendor/stores/dominos/{{store.StoreID}}" class="btn glyphicon glyphicon-edit" title="Edit"></a></td>
+    <td>{{store.AddressDescription}}</td>
+    <td>{{store.HoursDescription}}</td>
+    <td>{{store.ServiceHoursDescription.Carryout}}</td>
+    <td>{{store.ServiceHoursDescription.Delivery}}</td>
+    <td>{{store.IsOnlineCapable}}</td>
+    <td>{{store.IsOnlineNow}}</td>
+    <td>{{store.AllowDeliveryOrders}}</td>
+    <td>{{store.ServiceIsOpen.Delivery}}</td>
+  </tr>
+</table>

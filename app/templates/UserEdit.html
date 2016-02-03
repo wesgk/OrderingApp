@@ -1,11 +1,11 @@
 <h2>Edit a User&apos;s Profile</h2>
 
-<button ng-model="collapsed" ng-click="collapsed=!collapsed">
+<button ng-model="collapsed" ng-click="collapsed=!collapsed" style="position:absolute;top:0;right:0;">
   <span ng-show="!collapsed">Show Debug</span>
   <span ng-show="collapsed">Hide Debug</span>
 </button>
 
-<div ng-show="collapsed" class="row">
+<div ng-show="collapsed" class="debug row">
   <div class="col-sm-12">
     Customer Number: {{customer.id}} : {{customer.fname}} {{customer.lname}}
     <pre>
@@ -13,119 +13,111 @@
     </pre>
   </div>
 </div>
-<hr>
-<form name="newUserForm" class="form-inline">
+
+<form name="newUserForm" classx="form-inline">
   <div class="form-group">
     <span ng-class="{'has-error':addressForm.fname.$error.required}">
       <label for="fname">First Name:</label>
-      <input type="text" name="fname" class="form-control" ng-model="user.fname" required/>
+      <input type="text" name="fname" classx="form-control" ng-model="user.fname" required/>
     </span>
   </div>
   <div class="form-group">
     <span ng-class="{'has-error':addressForm.lname.$error.required}">
       <label for="lname">Last Name:</label>
-      <input type="text" name="lname" class="form-control" ng-model="user.lname" required/>
+      <input type="text" name="lname" classx="form-control" ng-model="user.lname" required/>
     </span>
   </div>
   <div class="form-group">
     <span ng-class="{'has-error':addressForm.email.$error.required}">
       <label for="email">Email:</label>
-      <input type="text" name="email" class="form-control" ng-model="user.email" required/>
+      <input type="text" name="email" classx="form-control" ng-model="user.email" required/>
     </span>
   </div>
   <div class="form-group">
     <span ng-class="{'has-error':addressForm.telephone.$error.required}">
       <label for="telephone">Telephone:</label>
-      <input type="text" name="telephone" class="form-control" ng-model="user.telephone" required/>
+      <input type="text" name="telephone" classx="form-control" ng-model="user.telephone" required/>
     </span>
   </div>
 
-  <div ng-repeat="address in user.addresses" ng-model="user.addresses">
-    <ng-form name="addressForm_{{$index}}">  
-      <fieldset>
-        <h3>Address <span ng-show="user.addresses.length>1">{{$index+1}}</span></h3>
-          <div class="form-group">
-            <span ng-class="{'has-error':addressForm_{{$index}}.buildingNumber.$error.required}">
-              <label for="buildingNumber">Building Number:</label>
-              <input type="text" name="buildingNumber" class="form-control" ng-model="user.addresses[$index].buildingNumber" required/>
-            </span>
-          </div>
-          <div class="form-group">
-            <span ng-class="">
-              <label for="apartmentNumber">Apartment Number:</label>
-              <input type="text" name="apartmentNumber" class="form-control" ng-model="user.addresses[$index].apartmentNumber" />
-            </span>
-          </div>
-          <div class="form-group">
-            <span ng-class="{'has-error':addressForm_{{$index}}.streetName.$error.required}">
-              <label for="streetName">Street Name:</label>
-              <input type="text" name="streetName" class="form-control" ng-model="user.addresses[$index].streetName" required/>
-            </span>
-          </div>  
-          <div class="form-group">
-            <span ng-class="{'has-error':addressForm_{{$index}}.city.$error.required}">
-              <label for="city">City:</label>
-              <input type="text" name="city" class="form-control" ng-model="user.addresses[$index].city" required/>
-            </span>
-          </div> 
-          <div class="form-group">
-            <span ng-class="{'has-error':addressForm_{{$index}}.province.$error.required}">
-              <label for="province">Province:</label>
-              <select name="province" class="form-control" ng-model="user.addresses[$index].province" required>
-                <option disabled="disabled" selected value="">Province:</option>
-                <option>Alberta</option>
-                <option>British Columbia</option>
-                <option>Manitoba</option>
-                <option>New Brunswick</option>
-                <option>Newfoundland and Labrador</option>
-                <option>Northwest Territories</option>
-                <option>Nova Scotia</option>
-                <option>Nunavut</option>
-                <option>Ontario</option>
-                <option>Prince Edward Island</option>
-                <option>Quebec</option>
-                <option>Saskatchewan</option>
-                <option>Yukon</option>
-              </select>
-            </span>
-          </div> 
-          <div class="form-group">
-            <span ng-class="{'has-error': newUserForm.postalCode.$error.required}">
-              <label for="postalCode">Postal Code:</label>
-              <input type="text" name="postalCode" class="form-control" ng-model="user.addresses[$index].postalCode" required/>
-            </span>
-          </div>
-          <div class="form-group col-sm-8">
-            <div class="clickable" ng-model="address.instructionsDisable" ng-click="address.instructionsDisable=!address.instructionsDisable">
-              <label for="deliveryInstructions" ng-show="address.instructionsDisable">Delivery Instructions:</label>
-              <div ng-show="!address.instructionsDisable && address.specialInstructions.length">{{address.specialInstructions}}</div>
-              <span ng-show="!address.specialInstructions.length && !address.instructionsDisable">
-                <abbr title="Click to edit">No delivery instructions given</abbr>
-              </span>
-            </div>
-            <textarea ng-show="address.instructionsDisable" name="deliveryInstructions" class="form-control clearfix" ng-model="user.addresses[$index].deliveryInstructions" rows="1">{{address.specialInstructions}}</textarea> 
-          </div>
-          <div class="form-inline">
-            <div class="form-group col-sm-2">
-              <div class="default-address-radio-btn" ng-class="{'bg-primary': user.defaultAddress == address.id}">
-                <label for="defaultAddress"><span>Make Default Address
-                  <input type="radio" id="option{{address.id}}" name="defaultAddress" ng-model="user.defaultAddress" value="{{address.id}}" /></span>
-                </label>
+    <div ng-repeat="address in user.addresses" ng-model="user.addresses" id="panel{{$index}}" class="panel-default">
+      <ng-form name="addressForm_{{$index}}">  
+        <fieldset>
+            <google-map-draggable info="user.addresses[$index]" addressIndex="$index"></google-map-draggable>
+            <h3 class="panel-title">Address <span ng-show="user.addresses.length>1">{{$index+1}}</span></h3>
+              <div class="form-group">
+                <span ng-class="{'has-error':addressForm_{{$index}}.buildingNumber.$error.required}">
+                  <label for="buildingNumber">Building Number:</label>
+                  <input type="text" name="buildingNumber" classx="form-control" ng-model="user.addresses[$index].buildingNumber" required/>
+                </span>
               </div>
-            </div>
-          </div>
-          <div class="form-group col-sm-2">
-            <button class="removeItemButton btn" ng-click="removeAddress(user.addresses, address, index)" ng-show="!$first">
-              <i class="glyphicon-minus"></i>
-            </button>
-          </div>
-      </fieldset>
-    </ng-form>
-  </div><!-- ng-repeat -->
+              <div class="form-group">
+                <span ng-class="">
+                  <label for="apartmentNumber">Apartment Number:</label>
+                  <input type="text" name="apartmentNumber" classx="form-control" ng-model="user.addresses[$index].apartmentNumber" />
+                </span>
+              </div>
+              <div class="form-group">
+                <span ng-class="{'has-error':addressForm_{{$index}}.streetName.$error.required}">
+                  <label for="streetName">Street Name:</label>
+                  <input type="text" name="streetName" classx="form-control" ng-model="user.addresses[$index].streetName" required/>
+                </span>
+              </div>  
+              <div class="form-group">
+                <span ng-class="{'has-error':addressForm_{{$index}}.city.$error.required}">
+                  <label for="city">City:</label>
+                  <input type="text" name="city" classx="form-control" ng-model="user.addresses[$index].city" required/>
+                </span>
+              </div> 
+              <div class="form-group">
+                <span ng-class="{'has-error':addressForm_{{$index}}.province.$error.required}">
+                  <label for="province">Province:</label>
+                  <select name="province" ng-model="user.addresses[$index].province" ng-options="province.abbreviation as province.name for province in provinces"></select>
+                </span>
+              </div> 
+              <div class="form-group">
+                <span ng-class="{'has-error': newUserForm.postalCode.$error.required}">
+                  <label for="postalCode">Postal Code:</label>
+                  <input type="text" name="postalCode" classx="form-control" ng-model="user.addresses[$index].postalCode" required/>
+                </span>
+              </div>
+               <div class="form-group">
+                <span>
+                  <label for="latLong">Lat Long:</label>
+                  <input type="text" name="latLong" id="latLon{{$index}}" classx="form-control" ng-model="user.addresses[$index].latLong" />
+                </span>
+              </div>
+              <div class="form-group col-sm-8">
+                <div class="clickable" ng-model="address.instructionsDisable" ng-click="address.instructionsDisable=!address.instructionsDisable">
+                  <label for="deliveryInstructions" ng-show="address.instructionsDisable">Delivery Instructions:</label>
+                  <div ng-show="!address.instructionsDisable && address.specialInstructions.length">{{address.specialInstructions}}</div>
+                  <span ng-show="!address.specialInstructions.length && !address.instructionsDisable">
+                    <abbr title="Click to edit">No delivery instructions given</abbr>
+                  </span>
+                </div>
+                <textarea ng-show="address.instructionsDisable" name="deliveryInstructions" class="form-control clearfix" ng-model="user.addresses[$index].deliveryInstructions" rows="1">{{address.specialInstructions}}</textarea> 
+              </div>
+              <div class="form-inline">
+                <div class="form-group col-sm-2">
+                  <div class="default-address-radio-btn" ng-class="{'bg-primary': user.defaultAddress == address.id}">
+                    <label for="defaultAddress"><span>Make Default Address
+                      <input type="radio" id="option{{address.id}}" name="defaultAddress" ng-model="user.defaultAddress" value="{{address.id}}" /></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-sm-2">
+                <button class="removeItemButton btn" ng-click="removeAddress(user.addresses, address, index)" ng-show="!$first">
+                  <i class="glyphicon-minus"></i>
+                </button>
+              </div>
+        </fieldset>
+      </ng-form>
+    </div><!-- ng-repeat -->
   <div class="row form-control-strip">
     <span class="col-sm-4">
-      <button type="submit" ng-show="!user.id" ng-disabled="newUserForm.$invalid" ng-click="saveUser(user, newUserForm)" class="btn btn-primary">Save User</button>
-      <button type="submit" ng-show="user.id" ng-disabled="newUserForm.$invalid" ng-click="updateUser(user, newUserForm)" class="btn btn-primary">Update User</button>
+     <button type="submit" ng-show="!user.id" ng-disabled="newUserForm.$invalid" ng-click="saveUser(user, newUserForm)" class="btn btn-primary">Save User</button>
+       <button type="submit" ng-show="user.id" ng-disabled="newUserForm.$invalid" ng-click="updateUser(user, newUserForm)" class="btn btn-primary">Update User</button>
       <button type="button" ng-click="reset()" class="btn btn-default">Reset</button>
     </span> 
     <span class="col-sm-4">

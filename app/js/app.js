@@ -32,8 +32,16 @@
         templateUrl: "templates/Users.html",
         controller: "UserListController"
       })
+      .when("/vendor/stores/dominos", {
+        templateUrl: "templates/Vendors/Stores/Stores.html",
+        controller: "StoreListController"
+      })
+      .when("/vendor/stores/dominos/:id", {
+        templateUrl: "templates/Vendors/Stores/StoreEdit.html",
+        controller: "EditStoreController"
+      })
       .otherwise({redirect: "/order"});
-      //$locationProvider.html5Mode(true); // removes the hash from URL
+      $locationProvider.html5Mode(true); // removes the hash from URL
 
       $logProvider.debugEnabled(true);
   });

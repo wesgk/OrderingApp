@@ -71,22 +71,7 @@
           <div class="form-group">
             <span ng-class="{'has-error':addressForm_{{$index}}.province.$error.required}">
               <label for="province">Province:</label>
-              <select name="province" class="form-control" ng-model="user.addresses[$index].province" required>
-                <option disabled="disabled" selected value="">Province:</option>
-                <option>Alberta</option>
-                <option>British Columbia</option>
-                <option>Manitoba</option>
-                <option>New Brunswick</option>
-                <option>Newfoundland and Labrador</option>
-                <option>Northwest Territories</option>
-                <option>Nova Scotia</option>
-                <option>Nunavut</option>
-                <option>Ontario</option>
-                <option>Prince Edward Island</option>
-                <option>Quebec</option>
-                <option>Saskatchewan</option>
-                <option>Yukon</option>
-              </select>
+              <select class="form-control" ng-model="user.addresses[$index].province" ng-options="selectedProvince.abbreviation as province.name for province in provinces"></select>
             </span>
           </div> 
           <div class="form-group">
@@ -109,7 +94,7 @@
             <div class="form-group col-sm-2">
               <div class="default-address-radio-btn" ng-class="{'bg-primary': user.defaultAddress == address.id}">
                 <label for="defaultAddress"><span>Make Default Address
-                  <input type="radio" id="option{{address.id}}" name="defaultAddress" ng-model="user.defaultAddress" value="{{address.id}}" /></span>
+                  <input type="radio" id="option{{address.id}}" name="defaultAddress" ng-model="user.defaultAddress" value="{{address.id}}"  /></span>
                 </label>
               </div>
             </div>

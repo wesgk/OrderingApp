@@ -1,6 +1,6 @@
 'use strict';
 
-pizzaApp.factory('userData', function($resource, $http, $log){
+pizzaApp.factory('userData', function($resource, $http, provinces, $log){
   var resource = $resource('/data/user/:id', {id:'@id'}, {"getAll": {method:"GET", isArray:true, params: {something: "foo"}}} );
   
   var masterAddress = {
@@ -28,9 +28,10 @@ pizzaApp.factory('userData', function($resource, $http, $log){
       apartmentNumber: '',
       streetName: '',
       city: '',
-      country: '',
+      country: 'USA',
       province: '',
       postalCode: '',
+      latLong: '',
       specialInstructions: ''
     }
     ],
@@ -50,14 +51,24 @@ pizzaApp.factory('userData', function($resource, $http, $log){
       apartmentNumber: '',
       streetName: '',
       city: '',
-      country: '',
+      country: 'USA',
       province: '',
       postalCode: '',
+      latLong: '',
       specialInstructions: ''
     }
     ],
     defaultAddress: ''
   };
+
+  // see bottom of the file for list of provinces/states
+
+  var getProvincePos = function(abbr){
+    for(var i = 0; i < provinces.length; i++){
+      if(provinces[i].abbreviation === abbr) return i;
+    }
+    return;
+  }
 
   var addAddress = function(addresses){
     $log.debug('in addAddress service');
@@ -127,6 +138,8 @@ pizzaApp.factory('userData', function($resource, $http, $log){
       getNextId: getNextId,
       reset: reset,
       addAddress: addAddress,
-      removeAddress: removeAddress
+      removeAddress: removeAddress,
+      provinces: provinces,
+      getProvincePos: getProvincePos
   };
 });

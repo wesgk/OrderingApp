@@ -19,7 +19,7 @@
     <th>Items</th>
   </tr>
   <tr ng-repeat="order in orders | orderBy:'-id'">
-    <td><a href="#/order/{{order.id}}" class="btn glyphicon glyphicon-edit" title="Edit"></a></td>
+    <td><a href="/order/{{order.id}}" class="btn glyphicon glyphicon-edit" title="Edit"></a></td>
     <td>{{order.id}}</td>
     <td>{{order.vendor}}</td>
     <td>{{order.items.length}}</td>
