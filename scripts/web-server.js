@@ -11,19 +11,12 @@ var app = express();
 var rootPath = path.normalize(__dirname + '/../');
 var bodyParser = require('body-parser');
 
-// var appPizzapi = express();
-// appPizzapi.use(bodyParser.urlencoded({extended:true}));
-
 // We are going to protect /api routes with JWT
 // app.use('/api', expressJwt({secret: secret}));
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 app.use(express.static(rootPath + '/app')); // static serves 
-
-// Dominos
-app.get('/data/vendor/stores/dominos', dominosApi.findNearbyStores);
-app.get('/data/vendor/stores/dominos/:id', dominosApi.getInfo);
 
 // Twilio
 app.get('/sms/send/:to/:from/:message', twilioApi.sendSms);

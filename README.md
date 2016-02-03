@@ -1,20 +1,21 @@
 # OrderingApp
 
-## 2015/11/18
+## 2016/02/03
 ## Synopsis
 
 This is a very simple application written in Angular 1.4.0 & Node Express express v4.2.1.  It is a inventory-listing/product-ordering app. All product orders are stored as .json files inside /app/data/order/.
 
-Currently the functionality is very limited.  Orders &amp; Users can be created and edited.
+*Currently the functionality is very limited.*
 
-> Vendor options are hard-coded into the mark-up
-> All dropdown options in orders and user forms are hard-coded
+> Orders &amp; Users can be created and edited.
+> Vendor options supplied via Google Places API
+..> Options filtered on users proximity, via GeoLocation
 
 ## Code Samples
 This is the existing order object:
 ```
 $scope.order = {
-  vendor: '',
+    vendor: '',
     customerId: 0,
     items: [
     {
