@@ -7,9 +7,10 @@ This is a very simple application written in Angular 1.4.0 & Node Express expres
 
 *Currently the functionality is very limited.*
 
-> Orders &amp; Users can be created and edited.
-> Vendor options supplied via Google Places API
-..> Options filtered on users proximity, via GeoLocation
+* Orders &amp; Users can be created and edited
+* Vendor options supplied via Google Places API
+..* Options filtered on users proximity, via GeoLocation
+* Skeleton of SMS text messaging is working via Twilio's Node module
 
 ## Code Samples
 This is the existing order object:
