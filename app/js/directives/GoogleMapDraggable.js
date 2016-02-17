@@ -10,7 +10,7 @@ pizzaApp.directive('googleMapDraggable', function($log){
     scope: {
       myAddress: '=info',
     },
-    template: '<div id="map{{myAddress.id}}" class="user-address-map {{myAddress.streetName}}"></div>',
+    template: '<div id="map{{myAddress.id}}" class="user-address-map map-marker-popups {{myAddress.streetName}}"></div>',
     link: function($scope){
       var geocoder;
       var map;

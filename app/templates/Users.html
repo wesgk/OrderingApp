@@ -21,7 +21,7 @@
     <th><abbr title="City listed in default address">City</abbr></th>
   </tr>
   <tr ng-repeat="user in users | orderBy:'lname'">
-    <td><a href="/user/{{user.id}}" class="btn glyphicon glyphicon-edit" title="Edit"></a></td>
+    <td><a href="/user/{{user._id}}" class="btn glyphicon glyphicon-edit" title="Edit"></a></td>
     <td>{{user.fname}}</td>
     <td>{{user.lname}}</td>
     <td>{{user.email}}</td>

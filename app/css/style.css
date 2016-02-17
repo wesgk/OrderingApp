@@ -11,7 +11,7 @@ select {
 }
 fieldset {
   margin: 2px 0;
-  padding: 16px;
+  /*padding: 16px;*/
   border-top: 1px solid #747474;
 }
 .form-control-strip {
@@ -51,3 +51,6 @@ fieldset {
   padding: 10px;
   border-radius: 6px;
 }*/
+[ng-messages] {
+  color: #f00;
+}
