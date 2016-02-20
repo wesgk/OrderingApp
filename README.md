@@ -1,6 +1,6 @@
 # OrderingApp
 
-## 2016/02/03
+## 2016/02/19
 ## Synopsis
 
 This is a very simple application written in Angular 1.4.0 & Node Express express v4.2.1.  It is a inventory-listing/product-ordering app. All product orders are stored as .json files inside /app/data/order/.
