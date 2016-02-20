@@ -1,16 +1,5 @@
 <h2>Existing Users</h2>
 
-<button ng-model="collapsed" ng-click="collapsed=!collapsed">
-  <span ng-show="!collapsed">Show Debug</span>
-  <span ng-show="collapsed">Hide Debug</span>
-</button>
-<div class="row bg-primary" ng-show="collapsed">
-  <pre>
-    {{users | json}}
-  </pre>
-</div>
-
-<hr>
 <table class="table table-striped">
   <tr>
     <th>&nbsp;</th>
@@ -18,7 +7,9 @@
     <th>Last Name</th>
     <th>Email</th>
     <th>Telephone</th>
+    <th>User Type</th>
     <th><abbr title="City listed in default address">City</abbr></th>
+    <th>Delete</th>
   </tr>
   <tr ng-repeat="user in users | orderBy:'lname'">
     <td><a href="/user/{{user._id}}" class="btn glyphicon glyphicon-edit" title="Edit"></a></td>
@@ -26,6 +17,8 @@
     <td>{{user.lname}}</td>
     <td>{{user.email}}</td>
     <td>{{user.telephone}}</td>
-    <td>{{user.addresses[user.defaultAddress-1].city}}</td>
+    <td>{{user.userType}}</td>
+    <td>{{user.addresses[user.defaultAddress].city}}</td>
+    <td><div confirm-delete on-confirm="deleteUser(user)"></div></td>
   </tr>
 </table>

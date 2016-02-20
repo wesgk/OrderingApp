@@ -1,19 +1,25 @@
 'use strict';
 
 pizzaApp.controller('EditUserController', 
-  function EditUserController($scope, userData, $routeParams, provinces, $timeout, $log){
+  function EditUserController($scope, userData, authLogout, $routeParams, $rootScope, $location, provinces, $log, $timeout){
     $scope.savedMessage = false;
     var savedMessageTO;
     $scope.provinces = userData.provinces;
     
+    if(!$rootScope.isAuthenticated){
+      $location.path('/login');
+    }
+
     userData.getUser($routeParams.id, function(user){
       $scope.user = user;
+      $scope.user.id = $scope.user._id; // handle mongoDB auto id
       setSelectedProvinces($scope.user.addresses); // set province dropdown to selected
     });
+    
     function setSelectedProvinces(addressArray){
       for(var i = 0; i < addressArray.length; i++){
         var provincePos = userData.getProvincePos(addressArray[i].province);
-        if( $scope.provinces[provincePos].abbreviation !== undefined ){
+        if( provincePos && $scope.provinces[provincePos].abbreviation !== undefined ){
           $scope.user.addresses[i].province = angular.copy($scope.provinces[provincePos].abbreviation);
         }
       }
@@ -24,8 +30,11 @@ pizzaApp.controller('EditUserController',
       });
     }
     $scope.updateUser = function(user, newUserForm){
-      $log.debug("items : " + user.items + "vendor : " + user.vendor + "newUserForm : " + newUserForm );
-      userData.save(user)
+      $log.debug("updateUser addresses : " + user.addresses.length + " vendor : " + user.fname + " , " + user.lname + "" );
+      console.dir(user);
+      console.dir(newUserForm);
+
+      userData.update(user)
         .$promise
         .then(function(response) { $log.debug('success', response); flashSavedMessage(); })
         .catch(function(response) { $log.error('failure', response)});

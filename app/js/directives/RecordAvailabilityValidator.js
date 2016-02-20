@@ -23,19 +23,17 @@ pizzaApp.directive('recordAvailabilityValidator',
         // will excluded in the validation (this was setup for testing unique email address)
         // var urlQuery = '/' + value;
         var urlQuery = '/' + value + (scope.user.id ? '/id/'+scope.user.id : '');
-        // var urlQuery = '/' + value; // append email to query string
-
+        
         setAsLoading(true);
         setAsAvailable(false);
         
         $http.get(apiUrl + urlQuery)
           .then(function (data) {
-            console.dir(data);
             setAsLoading(false);
-            setAsAvailable(data.data.length === 0);
+            setAsAvailable(Boolean(data.data.length === 0));
           });
 
-        // return value;
+        return value;
       })
     }
   }

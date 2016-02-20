@@ -29,7 +29,7 @@
               ng-maxlength="30"
               record-availability-validator="/mongo/user/availability/email"
               required/>
-    <div ng-messages="newUserForm.email.$error">
+      <div ng-messages="newUserForm.email.$error">
         <div ng-messages-include="/templates/Utilities/ErrorMessages.html"></div>
         <div ng-message="recordLoading">Checking database...</div>
         <div ng-message="recordAvailable">The email address is already in use</div>

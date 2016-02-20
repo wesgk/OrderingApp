@@ -1,0 +1,1 @@
+"use strict";pizzaApp.directive("confirmAction",[function(){return{priority:1e3,restrict:"A",link:function(e,t,n){var r=n.confirm||"Are you sure?";console.log("in confirmAction");console.dir(t);t.bind("click",function(t){e.dothis=function(){alert("here");console.log("alerting ")};e.dothis();console.log("click "+r)})}}}]);

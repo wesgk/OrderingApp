@@ -1,26 +1,17 @@
 <h2>Existing Orders</h2>
 
-<button ng-model="collapsed" ng-click="collapsed=!collapsed">
-  <span ng-show="!collapsed">Show Debug</span>
-  <span ng-show="collapsed">Hide Debug</span>
-</button>
-<div class="row bg-primary" ng-show="collapsed">
-  <pre>
-    {{orders | json}}
-  </pre>
-</div>
-
-<hr>
 <table class="table table-striped">
   <tr>
     <th>&nbsp;</th>
+    <th>Date</th>
     <th>Customer</th>
     <th>Vendor</th>
     <th>Items</th>
   </tr>
-  <tr ng-repeat="order in orders | orderBy:'-id'">
-    <td><a href="/order/{{order.id}}" class="btn glyphicon glyphicon-edit" title="Edit"></a></td>
-    <td>{{order.id}}</td>
+  <tr ng-repeat="order in orders | orderBy:'updated_at'">
+    <td><a href="/order/{{order._id}}" class="btn glyphicon glyphicon-edit" title="Edit"></a></td>
+    <td>{{order.updated_at}}</td>
+    <td>{{order._id}}</td>
     <td>{{order.vendor}}</td>
     <td>{{order.items.length}}</td>
   </tr>

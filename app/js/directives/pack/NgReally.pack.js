@@ -1,0 +1,1 @@
+"use strict";pizzaApp.directive("ngReallyClick",[function(){return{restrict:"A",link:function(e,t,n){t.bind("click",function(){var t=n.ngReallyMessage;t&&confirm(t)&&e.$apply(n.ngReallyClick)})}}}]);

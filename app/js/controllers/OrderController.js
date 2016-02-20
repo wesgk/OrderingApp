@@ -1,11 +1,16 @@
 "use strict";
 
 pizzaApp.controller('OrderController',
-  function OrderController($scope, orderData, twilioSms, googlePlaces, $log, $timeout){
+  function OrderController($scope, orderData, twilioSms, googlePlaces, $rootScope, $location, $log, $timeout){
     $scope.order = orderData.order;
     $scope.savedMessage = false;
     $scope.reviewFields = false;
     var savedMessageTO;
+    
+    if(!$rootScope.isAuthenticated){
+      $location.path('/login');
+    }
+
     $scope.reset = function(){
       orderData.reset();
     }
@@ -22,19 +27,15 @@ pizzaApp.controller('OrderController',
       $scope.reviewFields = false;
     };
     $scope.saveOrder = function(order, newOrderForm){
-      orderData.getNextId(function(newId){
-        order.id  = newId[0];
-        $log.debug('order.id: '+ order.id);
-        if(newOrderForm.$valid){
-          orderData.save(order)
-            .$promise
-            .then(function(response){ 
-              $log.debug('success', response); 
-              sendSmsMessage(order);
-            })
-            .catch(function(response){ $log.error('failure', response)});
+      if(newOrderForm.$valid){
+        orderData.save(order)
+          .$promise
+          .then(function(response){ 
+            $log.debug('success', response); 
+            sendSmsMessage(order);
+          })
+          .catch(function(response){ $log.error('failure', response)});
         }
-      });
     };
     $scope.updateOrder = function(order, newOrderForm){
       $log.debug("items : " + order.items + "vendor : " + order.vendor + "newOrderForm : " + newOrderForm );
@@ -49,9 +50,9 @@ pizzaApp.controller('OrderController',
     };
     function sendSmsMessage(order){
       twilioSms.sendMessage('16046186619', '16042392881', 'test message monkey').then(function(response){
-          flashSavedMessage(); 
-          console.log('twilioSms.sendMessage Response: ' + response);
-        });
+        flashSavedMessage(); 
+        console.log('twilioSms.sendMessage Response: ' + response);
+      });
     }
     function flashSavedMessage(){
       $scope.savedMessage = true;
@@ -65,9 +66,9 @@ pizzaApp.controller('OrderController',
     $scope.removeItem = function(order, item, index){
       orderData.removeItem(order, item);
     };
+    // POPULATE DROPDOWN WITH LIST OF VENDORS
     $scope.getVendorList = function(){
       var userLocation = googlePlaces.getUserLocation({ returnLatLng: true }, function(locationInfo){
-        // var stores = googlePlaces.getStores( locationInfo.lat, locationInfo.lng, 500 ).then( function( response ){
         var stores = googlePlaces.getStores({ lat: locationInfo.lat, lng: locationInfo.lng, radius: 500 }).then( function(response){ 
           var dropdownList = [];
           for(var obj in response.results){ 
@@ -78,12 +79,9 @@ pizzaApp.controller('OrderController',
             var open = googlePlaces.getOpen(rec);
             var delivery = googlePlaces.getDelivery(rec);
             var address = googlePlaces.getAddress(rec);
-            //var marker = googlePlaces.getMarkerName(rec);
             dropdownList.push( { id: id, value: contentString.replace(/<br>/g,' ') } );
           }
-          console.log('CTL - dropdownList: ' + dropdownList);
           $scope.vendorList = dropdownList;
-          // $scope.$apply();
         });
       });
     };

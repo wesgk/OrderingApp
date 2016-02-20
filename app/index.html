@@ -2,15 +2,26 @@
 <html ng-app="pizzaApp">
   <head>
    <base href="/"/>
-   <title>Ordering App</title>
+   <title>Pizza App</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css" />
     <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
     <div class="container-fluid">
-      <h1>Ordering App</h1>
-      <div class="navbar">
+      <div ng-show="isAuthenticated" class="row">
+        <div class="col-xs-6">
+          <a href="/order"><h1 class="main">Order</h1></a>
+        </div>
+        <div class="col-xs-6 text-right">
+          <a href="/account/{{$root.authUser.id}}"><h1 class="user-nav main inline">My Account</h1></a>
+          <a href="/login/logout"><h1 class="user-nav main inline">Logout</h1></a>
+        </div>
+      </div>
+      <div ng-show="!isAuthenticated" class="ng-cloak">
+        <a href="login">Login</a> or <a href="register">register</a> to begin
+      </div>
+      <div ng-show="isAdmin" class="navbar ng-cloak">
         <ul class="nav">
           <li><a href="/order">create order</a></li>
           <li><a href="/orders">exiting orders</a></li>
@@ -23,8 +34,9 @@
               <li><a href="/user">create user profile</a></li>
             </ul>
           </li>
-          <li ng-show="isAuthenticated"><a href="login/logout">Logout</a></li>
-          <li ng-show="!isAuthenticated"><a href="login">Login</a></li>
+          <li ng-show="isAuthenticated"><a href="account/{{$root.authenticatedId}}">account</a></li>
+          <li ng-show="isAuthenticated"><a href="login/logout">logout</a></li>
+          <li ng-show="!isAuthenticated"><a href="login">login</a></li>
         </ul>
       </div>
       <div ng-view></div>
@@ -40,35 +52,26 @@
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_MqNXVF36cZgRywDiji4n7AZli25uFQs">
   </script>
   <script src="/js/app.js"></script>
+  <script src="/js/controllers/AuthController.js"></script>  
   <script src="/js/controllers/OrderController.js"></script> 
   <script src="/js/controllers/EditOrderController.js"></script> 
   <script src="/js/controllers/OrderListController.js"></script> 
   <script src="/js/controllers/UserController.js"></script> 
-  <script src="/js/controllers/UserMongoController.js"></script> 
   <script src="/js/controllers/EditUserController.js"></script> 
-  <script src="/js/controllers/EditUserMongoController.js"></script> 
   <script src="/js/controllers/UserListController.js"></script> 
-  <script src="/js/controllers/UserListMongoController.js"></script> 
-  <script src="/js/controllers/StoreListController.js"></script> 
-  <script src="/js/controllers/EditStoreController.js"></script> 
-  <script src="/js/controllers/AuthController.js"></script> 
-  <script src="/js/controllers/AuthLogoutController.js"></script> 
-  <script src="/js/services/VendorData.js"></script>
+  <script src="/js/services/AuthInterceptor.js"></script>
   <script src="/js/services/OrderData.js"></script>
   <script src="/js/services/UserData.js"></script>
-  <script src="/js/services/UserMongo.js"></script>
   <script src="/js/services/resources/Provinces.js"></script>
-  <script src="/js/services/StoreData.js"></script>
   <script src="/js/services/GooglePlaces.js"></script>
   <script src="/js/services/GoogleGeoLocation.js"></script>
   <script src="/js/services/TwilioSms.js"></script>
-  <script src="/js/services/AuthInterceptor.js"></script>
   <script src="/js/directives/GoogleMapDraggable.js"></script>
   <script src="/js/directives/GooglePlacesMap.js"></script>
   <script src="/js/directives/GooglePlacesDropdown.js"></script>
-  <script src="/js/directives/IsUniqueEmail.js"></script>
   <script src="/js/directives/RecordAvailabilityValidator.js"></script>
+  <script src="/js/directives/confirmDelete.js"></script>
   <script src="/js/filters/StoreFilters.js"></script> 
-  <img src="/images/map_icon_' + markerImage + '.png">
+  <script src="/js/filters/TelephoneNumber.js"></script> 
   </body>
 </html>

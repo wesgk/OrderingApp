@@ -1,5 +1,25 @@
 'use strict';
 
+// login
+pizzaApp.factory('authLogin', function ($q, $window) {
+  
+
+  
+  var logout = function ($scope, $rootScope){
+    $scope.welcome = '';
+    $scope.message = '';
+    // $scope.isAuthenticated = false;
+    $rootScope.isAuthenticated = false;
+    delete $window.sessionStorage.token;
+  };
+
+  return {
+    logout: logout
+  };
+
+});
+
+
 // logout
 pizzaApp.factory('authLogout', function ($q, $window) {
   

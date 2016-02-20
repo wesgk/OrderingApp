@@ -1,0 +1,1 @@
+"use strict";pizzaApp.directive("confirmDelete",function(){return{replace:!0,templateUrl:"templates/Utilities/deleteConfirmation.html",scope:{onConfirm:"&"},controller:function(e){e.isDeleting=!1;e.startDelete=function(){return e.isDeleting=!0};e.cancel=function(){return e.isDeleting=!1};return e.confirm=function(){return e.onConfirm()}}}});

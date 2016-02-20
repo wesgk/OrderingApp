@@ -1,10 +1,10 @@
 "use strict";
 
 pizzaApp.controller('UserController',
-  function UserController($scope, userData, provinces, $log, $timeout){
+  function UserController($scope, userData, provinces, $location, $log, $timeout){
+    var savedMessageTO;
     $scope.user = userData.user;
     $scope.savedMessage = false;
-    var savedMessageTO;
     $scope.provinces = provinces;
     $scope.selectedProvince = angular.copy($scope.provinces[0].abbreviation);
     $scope.user.defaultAddress = 0; // auto-set 1st address as default
@@ -19,18 +19,32 @@ pizzaApp.controller('UserController',
         .catch(function(response){ $log.error('failure', response)});
     }
     $scope.saveUser = function(user, newUserForm){
-      userData.getNextId(function(newId){
-        user.id  = newId[0];
-        var thisUser = user;
-        $log.debug('user.id: '+ user.id);
-        if(newUserForm.$valid){
+      $log.debug('in saveUser');
+      if(newUserForm.$valid){
+      userData.save(user)
+        .$promise
+        .then(function(response){ 
+          $log.debug('success', response); 
+          flashSavedMessage(); 
+        })
+        .catch(function(response){ $log.error('failure', response)});
+      }
+    };
+    $scope.saveNewUser = function(user, newUserForm){
+      $log.debug('in saveNewUser');
+      if(newUserForm.$valid){
         userData.save(user)
           .$promise
-          .then(function(response){ $log.debug('success', response); flashSavedMessage(); })
+          .then(function(response){ 
+            $log.debug('success', response); 
+            flashSavedMessage(); 
+            $scope.user = response; // set new user to current user
+            $scope.user.id = response._id;
+            $location.path('/login')
+          })
           .catch(function(response){ $log.error('failure', response)});
-        }
-      });
-    };
+      }
+    }
     $scope.updateUser = function(user, newUserForm){
       $log.debug("items : " + user.items + "vendor : " + user.vendor + "newUserForm : " + newUserForm );
       var customerId;
@@ -41,6 +55,12 @@ pizzaApp.controller('UserController',
           .then(function(response){ $log.debug('success', response); flashSavedMessage(); })
           .catch(function(response){ $log.error('failure', response)});
       }
+    };
+    $scope.deleteUser = function(user){
+      userData.delete(user)
+      .$promise
+      .then(function(response){ $log.debug('success', response); })
+      .catch(function(response){ $log.error('failure', response); });
     };
     function flashSavedMessage(){
       $scope.savedMessage = true;

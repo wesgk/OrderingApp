@@ -19,7 +19,7 @@ function url_base64_decode(str) {
 }
 
 pizzaApp.controller('AuthController', function ($scope, $routeParams, $rootScope, authLogout, $http, $location, $window) {
-  $scope.user = {username: 'john.doe', password: 'foobar'};
+  $scope.user = {username: '', password: ''};
   $scope.message = '';
 
   // test for logout flag
@@ -29,18 +29,25 @@ pizzaApp.controller('AuthController', function ($scope, $routeParams, $rootScope
     $location.path('/login');
   }
 
-  $scope.submit = function () {
+  var authenticate = function(){
     $http
       .post('/authenticate', $scope.user)
       .success(function (data, status, headers, config) {
-
-      $window.sessionStorage.token = data.token;
+        $window.sessionStorage.token = data.token;
         $scope.isAuthenticated = true;
         $rootScope.isAuthenticated = true;
         var encodedProfile = data.token.split('.')[1];
         var profile = JSON.parse(url_base64_decode(encodedProfile));
-        $scope.welcome = 'Welcome ' + profile.first_name + ' ' + profile.last_name;
+        $scope.welcome = 'Welcome ' + profile.first_name + ' ' + profile.last_name + ' @ ' + profile.telephone;
+        $rootScope.authenticatedId = profile.id;
+        $rootScope.isAdmin = (profile.userType === 1 ? true : false ); 
+        $rootScope.fname = profile.first_name;
+        $rootScope.lname = profile.last_name;
+        $rootScope.telephone = profile.telephone;
+        $rootScope.authUser = profile;
         $scope.error = ''; // clear existing error messages
+        console.dir(profile);
+        $location.path('/order');
       })
       .error(function (data, status, headers, config) {
         // Erase the token if the user fails to log in
@@ -48,14 +55,17 @@ pizzaApp.controller('AuthController', function ($scope, $routeParams, $rootScope
         authLogout.logout($scope, $rootScope);
         $scope.isAuthenticated = false;
         $rootScope.isAuthenticated = false;
-
+        $rootScope.isAdmin = false;
         // Handle login errors here
+        $scope.welcome = '';
+        $scope.id = '';
         $scope.error = 'Error: Invalid user or password';
-        // $scope.welcome = '';
       });
+  }
+
+  $scope.submit = function () {
+    authenticate();
   };
-
-
 
   $scope.callRestricted = function () {
     $http({url: '/api/restricted', method: 'GET'})

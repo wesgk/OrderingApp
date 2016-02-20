@@ -1,26 +1,27 @@
 'use strict';
 
-pizzaApp.controller('EditUserMongoController', 
-  function EditUserMongoController($scope, userMongo, $routeParams, provinces, $log, $timeout, authLogout){
+pizzaApp.controller('EditAccountController', 
+  function EditAccountController($scope, userData, $routeParams, provinces, $log, $timeout, authLogout){
     $scope.savedMessage = false;
     var savedMessageTO;
-    $scope.provinces = userMongo.provinces;
+    $scope.provinces = userData.provinces;
     
-    userMongo.getUser($routeParams.id, function(user){
+    userData.getUser($routeParams.id, function(user){
       $scope.user = user;
-      $scope.user.id = $scope.user._id;
+      $scope.user.id = $scope.user._id; // handle mongoDB auto id
       setSelectedProvinces($scope.user.addresses); // set province dropdown to selected
     });
+    
     function setSelectedProvinces(addressArray){
       for(var i = 0; i < addressArray.length; i++){
-        var provincePos = userMongo.getProvincePos(addressArray[i].province);
+        var provincePos = userData.getProvincePos(addressArray[i].province);
         if( provincePos && $scope.provinces[provincePos].abbreviation !== undefined ){
           $scope.user.addresses[i].province = angular.copy($scope.provinces[provincePos].abbreviation);
         }
       }
     }
     $scope.reset = function(){
-      userMongo.reset($routeParams.id, function(user){
+      userData.reset($routeParams.id, function(user){
         $scope.user = user;
       });
     }
@@ -29,7 +30,7 @@ pizzaApp.controller('EditUserMongoController',
       console.dir(user);
       console.dir(newUserForm);
 
-      userMongo.update(user)
+      userData.update(user)
         .$promise
         .then(function(response) { $log.debug('success', response); flashSavedMessage(); })
         .catch(function(response) { $log.error('failure', response)});
@@ -51,10 +52,10 @@ pizzaApp.controller('EditUserMongoController',
     }
     $scope.addAddress = function(addresses){
       $log.debug('in addAddress ctrl');
-      userMongo.addAddress(addresses);
+      userData.addAddress(addresses);
     }
     $scope.removeAddress = function(addresses, address, index){
-      userMongo.removeAddress(addresses, address, index);
+      userData.removeAddress(addresses, address, index);
       setDefaultAddress();
     };
 });

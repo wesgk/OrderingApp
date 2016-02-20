@@ -1,12 +1,12 @@
 'use strict';
 
 pizzaApp.factory('orderData', function($resource, $http, $log){
-  var resource = $resource('/data/order/:id', {id:'@id'}, {"getAll": {method:"GET", isArray:true, params: {something: "foo"}}} );
+  var resource = $resource('/mongo/order/:id', {id:'@id'}, {"getAll": {method:"GET", isArray:true, params: {something: "foo"}}} );
   
   var masterItem = {
     id: 1,
-    count: '',
-    type: '',
+    amount: '',
+    style: '',
     size: ''
   };
 
@@ -16,8 +16,8 @@ pizzaApp.factory('orderData', function($resource, $http, $log){
     items: [
     {
       id: 1,
-      count: '',
-      type: '',
+      amount: '',
+      style: '',
       size: ''
     }
     ]
@@ -53,7 +53,7 @@ pizzaApp.factory('orderData', function($resource, $http, $log){
 
   var getOrder = function(orderId, successcb) {
     $log.debug('in getORder getting: '+ orderId);
-    $http({method:'GET', url: '/data/order/'+orderId}).
+    $http({method:'GET', url: '/mongo/order/'+orderId}).
       success(function(data, status, headers, config){
         successcb(data); 
       }).
