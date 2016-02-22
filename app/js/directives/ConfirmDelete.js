@@ -3,7 +3,7 @@
 pizzaApp.directive('confirmDelete', function() {
     return {
       replace: true,
-      templateUrl: 'templates/Utilities/deleteConfirmation.html',
+      templateUrl: 'templates/Utilities/DeleteConfirmation.html',
       scope: {
         onConfirm: '&'
       },
